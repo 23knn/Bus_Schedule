@@ -19,7 +19,7 @@ package com.example.busschedule.data
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "bus_schedules")
 data class BusSchedule(
     @PrimaryKey(autoGenerate = true)
     val id: Int,

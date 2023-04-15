@@ -22,7 +22,7 @@ interface BusScheduleDAO {
     suspend fun deleteSchedule(schedule: BusSchedule)
 
     @Query("SELECT * FROM bus_schedules")
-    suspend fun getAllSchedules(): Flow<List<BusSchedule>>
+    fun getAllSchedules(): Flow<List<BusSchedule>>
 
     @Query("SELECT * FROM bus_schedules where id = :id") // might not use it but good for practice
     fun getSchedule(id:Int): Flow<BusSchedule>

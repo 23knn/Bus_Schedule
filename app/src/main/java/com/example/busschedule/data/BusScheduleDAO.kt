@@ -1,5 +1,6 @@
 package com.example.busschedule.data
 
+import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -7,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface BusScheduleDAO {
     // this is the skeleton of the methods used to interact with the database. Room generates an
     // .. implementation of it at compile time

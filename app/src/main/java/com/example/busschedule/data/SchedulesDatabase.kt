@@ -34,9 +34,15 @@ object schedulesDatabaseCompanion{ //
 
     fun getDatabaseInstance(context: Context): SchedulesDatabase {
         return Instance ?: synchronized(this) {
-            Room.databaseBuilder(context, SchedulesDatabase::class.java, "schedules_database")
+            Room.databaseBuilder(context, SchedulesDatabase::class.java, "bus_schedule")
+                .createFromAsset("database/bus_schedule.db")
+                // Wipes and rebuilds instead of migrating if no Migration object.
+                .fallbackToDestructiveMigration()
                 .build()
-                .also { Instance = it }
+                .also {
+                    Instance = it
+                }
         }
+
     }
 }

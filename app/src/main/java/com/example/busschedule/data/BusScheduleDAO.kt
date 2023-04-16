@@ -23,9 +23,9 @@ interface BusScheduleDAO {
     @Delete
     suspend fun deleteSchedule(schedule: BusSchedule)
 
-    @Query("SELECT * FROM bus_schedules")
+    @Query("SELECT * FROM Schedule")
     fun getAllSchedules(): Flow<List<BusSchedule>>
 
-    @Query("SELECT * FROM bus_schedules where stopName = :stopName")
+    @Query("SELECT * FROM Schedule where stop_name = :stopName")
     fun getScheduleByStopName(stopName: String): Flow<List<BusSchedule>>
 }

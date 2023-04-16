@@ -18,40 +18,34 @@ package com.example.busschedule.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.busschedule.BusScheduleApplication
 import com.example.busschedule.data.BusSchedule
+import com.example.busschedule.data.BusScheduleRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 
-class BusScheduleViewModel(): ViewModel() {
+class BusScheduleViewModel(private val repository: BusScheduleRepository): ViewModel() {
     // Get example bus schedule from Room DB
-    fun getFullSchedule(): Flow<List<BusSchedule>> = flowOf(
-        listOf(
-            BusSchedule(
-                1,
-                "Example Street",
-                0
-            )
-        )
-    )
+    fun getFullSchedule(): Flow<List<BusSchedule>> = repository.getAllBusSchedules()
+    // we don't put the above in a coroutine scope since we get the flow and flow doesn't come from a suspend function
+
     // Get example bus schedule by stop
-    fun getScheduleFor(stopName: String): Flow<List<BusSchedule>> =
-        flowOf(
-            listOf(
-                BusSchedule(
-                    1,
-                    "Example Street",
-                    0
-                )
-            )
-        )
+    fun getScheduleFor(stopName: String): Flow<List<BusSchedule>> = repository.getScheduleByStopName(stopName = stopName)
 
     companion object {
         val factory : ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                BusScheduleViewModel()
+                val app = (this[APPLICATION_KEY] as BusScheduleApplication)// get app
+                val repo = app.container.busScheduleRepository // get repository
+                BusScheduleViewModel(repository = repo) // inject
             }
         }
     }
 }
+
+

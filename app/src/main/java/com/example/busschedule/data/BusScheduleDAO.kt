@@ -26,6 +26,6 @@ interface BusScheduleDAO {
     @Query("SELECT * FROM bus_schedules")
     fun getAllSchedules(): Flow<List<BusSchedule>>
 
-    @Query("SELECT * FROM bus_schedules where id = :id") // might not use it but good for practice
-    fun getSchedule(id:Int): Flow<BusSchedule>
+    @Query("SELECT * FROM bus_schedules where stopName = :stopName")
+    fun getScheduleByStopName(stopName: String): Flow<List<BusSchedule>>
 }

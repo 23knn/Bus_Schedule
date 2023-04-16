@@ -8,7 +8,7 @@ interface BusScheduleRepository {
     suspend fun updateBusSchedule(schedule: BusSchedule): Unit
     suspend fun deleteBusSchedule(schedule: BusSchedule): Unit
     fun getAllBusSchedules(): Flow<List<BusSchedule>>
-    fun getBusSchedule(id: Int): Flow<BusSchedule>
+    fun getScheduleByStopName(stopName: String): Flow<List<BusSchedule>>
     /**
      * when returning  Flow object, we don't need to add suspend. this is because a flow is an observable
      * and it prevents us from having to fetch data when data changes. when data changes, the flow automatically updates
@@ -26,6 +26,6 @@ class OfflineBusScheduleRepository(private val busScheduleDao: BusScheduleDAO): 
 
     override fun getAllBusSchedules(): Flow<List<BusSchedule>> = busScheduleDao.getAllSchedules()
 
-    override fun getBusSchedule(id: Int): Flow<BusSchedule> = busScheduleDao.getSchedule(id = id)
+    override fun getScheduleByStopName(stopName: String): Flow<List<BusSchedule>> = busScheduleDao.getScheduleByStopName(stopName = stopName)
 
 }
